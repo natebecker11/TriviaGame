@@ -1,0 +1,23 @@
+/* Container for CSS Grid */
+.container {
+    width: 960px;
+    height: 600px;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 50px 80px 20px 660px 20px 80px 50px;
+    grid-template-rows: 20px 75px 75px 30px 30px 180px 60px;
+    background-color: magenta;
+    margin-top: 5px;
+    margin: 0 auto;
+}
+
+
+/* Items in the grid */
+.header {
+    grid-column: 2 / 7;
+    grid-row: 2 / 3;
+    color: teal;
+    font-size: 300%;
+
+
+}
