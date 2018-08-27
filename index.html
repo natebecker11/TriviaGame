@@ -9,31 +9,33 @@
 </head>
 <body>
     <div class='container'>
-        <h1 class='header'>
+        <h1 class='header' id='header'>
             Super Duper Trivia!
-        </h1>        
-        <h3 class='timer'>:24 remaining</h3>
+        </h1>
+        <div id='timerDiv' class='invis'>        
+            <h3 class='timer' id='timer'>:24 remaining</h3>
+        </div>
         <div id='startDiv'>
-            <h2 class='start-btn'></h2>
+            <h2 class='start-btn' id='startBtn'></h2>
         </div>
-        <div id='questionDiv'>
-            <h3 class='question'>What tastes like cat food?</h3>
-            <h2 class='answer1'>Man food</h2>
-            <h2 class='answer2'>Dog food</h2>
-            <h2 class='answer3'>Cats</h2>
-            <h2 class='answer4'>Cat food</h2>
+        <div id='questionDiv' class='invis'>
+            <h3 class='question' id='question'>What tastes like cat food?</h3>
+            <h2 class='ans answer1' id='answer1'>Man food</h2>
+            <h2 class='ans answer2' id='answer2'>Dog food</h2>
+            <h2 class='ans answer3' id='answer3'>Cats</h2>
+            <h2 class='ans answer4' id='answer4'>Cat food</h2>
         </div>
-        <div id='resultDiv'>
-            <h2 class='right-wrong'></h2>
-            <h3 class='correct-answer'></h3>
-            <img class='answer-pic'>
+        <div id='resultDiv' class='invis'>
+            <h2 class='right-wrong' id='rightWrong'></h2>
+            <h3 class='correct-answer' id='correctAnswer'></h3>
+            <img class='answer-pic' id='answerPic'>
         </div>
-        <div id='gameOverDiv'>
-            <h2 class='result-head'></h2>
-            <h3 class='correct-ans'></h3>
-            <h3 class='incorrect-ans'></h3>
-            <h3 class='unanswered'></h3>
-            <h2 class='restart-box'></h2>
+        <div id='gameOverDiv' class='invis'>
+            <h2 class='result-head' id='resultHead'></h2>
+            <h3 class='correct-ans' id='correctAns'></h3>
+            <h3 class='incorrect-ans' id='guessedRight'></h3>
+            <h3 class='unanswered' id='guessedWrong'></h3>
+            <h2 class='restart-box' id='timesUp'></h2>
         </div>
     </div>
     
