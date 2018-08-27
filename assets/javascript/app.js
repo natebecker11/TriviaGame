@@ -18,7 +18,7 @@
             answer3: 'Fake Statue of David',
             answer4: 'Fake Time Magazine Cover Featuring Himself',
             correctAnswer: 'Fake Time Magazine Cover Featuring Himself',
-            correctAnswerNum: '4',
+            correctAnswerNum: 'answer4',
             answerPic: 'assets/images/time.jpg',
         },
         {
@@ -28,7 +28,7 @@
             answer3: 'Albert Einstein',
             answer4: 'Carl Sagan',
             correctAnswer: 'Kim Jong Un',
-            correctAnswerNum: '1',
+            correctAnswerNum: 'answer1',
             answerPic: 'assets/images/kim.jpg',
         },
         {
@@ -38,7 +38,7 @@
             answer3: '~35000',
             answer4: '~Never',
             correctAnswer: '~3500',
-            correctAnswerNum: '2',
+            correctAnswerNum: 'answer2',
             answerPic: 'assets/images/sued.gif',
         },
         {
@@ -48,7 +48,7 @@
             answer3: 'Neither.',
             answer4: 'Both.',
             correctAnswer: 'Both.',
-            correctAnswerNum: '4',
+            correctAnswerNum: 'answer4',
             answerPic: 'assets/images/twotrumps.jpg',
         },
         {
@@ -58,7 +58,7 @@
             answer3: '~400',
             answer4: 'None, he only drinks the tears of snowflakes.',
             correctAnswer: '~85',
-            correctAnswerNum: '2',
+            correctAnswerNum: 'answer2',
             answerPic: 'assets/images/dietcoke.jpg',
         },
         {
@@ -68,7 +68,7 @@
             answer3: 'His third wife',
             answer4: 'His daughter-wife',
             correctAnswer: 'His third wife',
-            correctAnswerNum: '3',
+            correctAnswerNum: 'answer3',
             answerPic: 'assets/images/melania.jpg',
         },
         {
@@ -78,7 +78,7 @@
             answer3: '5-8',
             answer4: '10-14',
             correctAnswer: '5-8',
-            correctAnswerNum: '3',
+            correctAnswerNum: 'answer3',
             answerPic: 'assets/images/trumptv.jpg',
         },
     
