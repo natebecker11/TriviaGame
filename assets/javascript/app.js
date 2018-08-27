@@ -84,12 +84,17 @@
     
     ]
 
+    // Array of text areas to fill
+    const textAreas = ['question', 'answer1', 'answer2', 'answer3', 'answer4']
     // Var to count which question is to be displayed next
     let questionCount = 0;
     // Scorekeeping
     let guessedWrong = 0;
     let guessedRight = 0;
-    let timesUp = 0;
+    let timesUp = 4;
+    // interval for timers
+    let intervalID = 0;
+    let displayTime = 0;
     
 
 
@@ -100,34 +105,19 @@
 // Global functions
 
 
-// Function to load the next question
-    // Hide the startDiv
-    // Show the questionDiv
-    // start a timer for 30 seconds,
-    // send the time to the timerbox
-    // Get the question from the question array    
-    // Assign .question to the question box
-    // Assign answer 1-4 to answer 1-4
-    // Assign theAnswer class to .theAnswer
-    // assign 'The correct answer was ' + .theAnswer
-    // set the img src to .answerPic
-    // increment questionCount
-
-// Function to load the gameover screen
-    // hide the resultDiv
-    // show the gameoverdiv
-    // send guessedRight, guessedWrong, timesUp to ''''''
-
-// Function to start a mid-round timer
-    // start a timer for 5 seconds, if questionCount = array.length - 1, send to end screen, else run next question function
-
-// Function to go to the result screen
-    // hide the questionDiv
-    // show the resultDiv
-    // clear the interval
-
-
-// Function to start the 30-second timer
+// Function for the timer. time = a time in seconds, cb = a function to run on completion, display = true/false, whether to display, target = optional, where to display
+const countdown = function(time, cb, display, target) {
+    if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
+    intervalID = setInterval(function(){
+        time--
+        console.log(timesUp);
+        if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
+        if (!time) {
+            clearInterval(intervalID);
+            cb();
+        }
+    }, 1000);
+}
     // set interval to 30 seconds
     // if timer = 0
         // increment timesUp
@@ -135,10 +125,104 @@
     // run the function that goes to the result screen
 
 
+// Function to go to the result screen, with a parameter for what text to display in the result header and a parameter for which score total to increment
+const toResult = function(text, incrementer) {
+    // hide the questionDiv elements
+    document.querySelectorAll('.questionDiv').forEach(function(element) {
+        element.classList.add('invis');
+    });
+    // show the resultDiv elements
+    document.querySelectorAll('.resultDiv').forEach(function(element) {
+        element.classList.remove('invis');
+    });
+    // send the text to the result header
+    document.querySelector('#rightWrong').textContent = text;
+
+    if (incrementer === 'timesUp') {timesUp++};
+    if (incrementer === 'guessedWrong') {guessedWrong++};
+    if (incrementer === 'guessedRight') {guessedRight++};
+    // check to see if we asked all the questions
+    if (questionCount === questionArray.length) {
+        // go to gameover screen
+        toGameOver();
+    } else {
+        // start a timer for 5s to send us to the next question
+        countdown(1, nextQuestion, false);
+    }
+};
+  
+
+// Function to load the next question
+const nextQuestion = function() {    
+    // Hide the startDiv
+    document.querySelector('#startDiv').classList.add('invis');
+    // Hide the resultDiv elements
+    document.querySelectorAll('.resultDiv').forEach(function(element) {
+        element.classList.add('invis');
+    });
+    // Show the questionDiv elements
+    document.querySelectorAll('.questionDiv').forEach(function(element) {
+        element.classList.remove('invis');
+    });
+    // run timer function for 30s, set to go to results after its up, and display to the #timer div
+    countdown(1, () => {toResult('Time Is Up!!', 'timesUp')}, true, '#timer');
+    // Get the question object from the question array
+    let currentObject = questionArray[questionCount];
+    // function to fill boxes from the question object
+    const boxFiller = function(box) {
+        document.getElementById(box).textContent = currentObject[box];        
+    };
+    // Fill the question and answers boxes
+    textAreas.forEach(function(element) {
+        boxFiller(element);
+    });   
+    // Assign theAnswer class to .theAnswer
+    document.getElementById(currentObject['correctAnswerNum']).classList.add('theAnswer');
+    // assign 'The correct answer was ' + .theAnswer
+    document.getElementById('correctAnswer').textContent = 'The correct answer was ' + currentObject['correctAnswer'] + '!'
+    
+    // set the img src to .answerPic
+    document.getElementById('answerPic').src = currentObject['answerPic'];
+    // increment questionCount
+    questionCount++;
+}
+
+
+// Function to load the gameover screen
+const toGameOver = function() {
+    // hide the resultDiv
+    document.querySelectorAll('.resultDiv').forEach(function(element) {
+        element.classList.add('invis');
+    });    
+
+    // show the gameoverdiv
+    document.querySelectorAll('.gameOverDiv').forEach(function(element) {
+        element.classList.remove('invis');
+    });
+    // hide the timer
+    document.querySelector('#timer').classList.add('invis');    
+    // send guessedRight, guessedWrong, timesUp to ''''''
+    document.querySelector("#guessedRight").textContent = 'Correct Answers:   ' + guessedRight;
+    document.querySelector("#guessedRight").textContent = 'Incorrect Answers: ' + guessedWrong;
+    document.querySelector("#guessedRight").textContent = 'Failed To Answer:  ' + timesUp;
+
+}
+
+
+// Function to start a mid-round timer
+    // start a timer for 5 seconds, if questionCount = array.length - 1, send to end screen, else run next question function
+    //// Remove the .theAnswer class from the previous right answer
+    // document.querySelector('.theAnswer').classList.remove('theAnswer');
+
 
 // When the start button is pressed
+const startGame = function() {
+    // show the timer
+    document.querySelector('#timer').classList.remove('invis');
     // load next question function
-
+    nextQuestion();
+}
+    
 // When the restart button is pressed
     // clear global variables
     // hide gameover screen
