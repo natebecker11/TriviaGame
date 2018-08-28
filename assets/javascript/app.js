@@ -2,7 +2,7 @@
     // Array of questions
     const questionArray = [
         {
-            question: 'How many times have Trump-owned companies filed for bankruptcy?',
+            question: 'How Many Times Have Trump-Owned Companies Filed For Bankruptcy?',
             answer1: '0',
             answer2: '2',
             answer3: '4',
@@ -12,7 +12,7 @@
             answerPic: 'assets/images/bankrupt.jpg',
         },
         {
-            question: 'Which fake piece of art does Trump have at several of his resorts?',
+            question: 'Which Fake Piece Of Art Does Trump Have At Several Of His Resorts?',
             answer1: 'Fake Mona Lisa',
             answer2: 'Fake Birth of Venus',
             answer3: 'Fake Statue of David',
@@ -22,7 +22,7 @@
             answerPic: 'assets/images/time.jpg',
         },
         {
-            question: 'According to Trump, who has a "great personality", is "talented" and "very smart"? ',
+            question: 'According To Trump, Who Has A "Great Personality", Is "Talented" And "Very Smart"? ',
             answer1: 'Kim Jong Un',
             answer2: 'Stephen Hawking',
             answer3: 'Albert Einstein',
@@ -32,7 +32,7 @@
             answerPic: 'assets/images/kim.jpg',
         },
         {
-            question: 'How many times has Trump been sued?',
+            question: 'How Many Times Has Trump Been Sued?',
             answer1: '~350',
             answer2: '~3500',
             answer3: '~35000',
@@ -42,9 +42,9 @@
             answerPic: 'assets/images/sued.gif',
         },
         {
-            question: 'Which of the following has Trump said?',
-            answer1: '"I know Hillary and I think she would make a great president."',
-            answer2: '"Hillary will be a disaster as a president."',
+            question: 'Which Of The Following Has Trump Said?',
+            answer1: '"I Know Hillary And I Think She Would Make A Great President."',
+            answer2: '"Hillary Will Be A Disaster As A President."',
             answer3: 'Neither.',
             answer4: 'Both.',
             correctAnswer: 'Both.',
@@ -52,27 +52,27 @@
             answerPic: 'assets/images/twotrumps.jpg',
         },
         {
-            question: 'How many cans of Diet Coke does Trump drink per week?',
+            question: 'How Many Cans Of Diet Coke Does Trump Drink Per Week?',
             answer1: '~20',
             answer2: '~85',
             answer3: '~400',
-            answer4: 'None, he only drinks the tears of snowflakes.',
+            answer4: 'None, He Only Drinks The Tears Of Snowflakes.',
             correctAnswer: '~85',
             correctAnswerNum: 'answer2',
             answerPic: 'assets/images/dietcoke.jpg',
         },
         {
-            question: 'Who cuts the hair of Trump to this day?',
-            answer1: 'His first wife',
-            answer2: 'His second wife',
-            answer3: 'His third wife',
-            answer4: 'His daughter-wife',
-            correctAnswer: 'His third wife',
+            question: 'Who Cuts The Hair Of Trump To This Day?',
+            answer1: 'His First Wife',
+            answer2: 'His Second Wife',
+            answer3: 'His Third Wife',
+            answer4: 'His Daughter-Wife',
+            correctAnswer: 'His Third Wife',
             correctAnswerNum: 'answer3',
             answerPic: 'assets/images/melania.jpg',
         },
         {
-            question: 'How many hours of TV does Trump watch each day?',
+            question: 'How Many Hours Of TV Does Trump, Our President, Watch Each Day?',
             answer1: '1-2',
             answer2: '3-4',
             answer3: '5-8',
@@ -95,7 +95,9 @@
     // interval for timers
     let intervalID = 0;
     let displayTime = 0;
-    
+    // Sound clips
+    let geniusClip = document.querySelector('#geniusClip');
+    let wrongClip = document.querySelector('#wrongClip');
 
 
 
@@ -108,10 +110,10 @@
 
 // Function for the timer. time = a time in seconds, cb = a function to run on completion, display = true/false, whether to display, target = optional, where to display
 const countdown = function(time, cb, display, target) {
-    if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
+    if (display) {document.querySelector(target).textContent = time + 's Remaining.'};
     intervalID = setInterval(function(){
         time--        
-        if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
+        if (display) {document.querySelector(target).textContent = time + 's Remaining.'};
         if (!time) {
             clearInterval(intervalID);
             cb();
@@ -146,6 +148,11 @@ const toResult = function(text, incrementer) {
     countdown(5, nextQuestion, false);
 };
   
+// Function to play a sound clip
+var playMusic = function(song) {
+    song.currentTime = 0;
+    song.play();
+}
 
 // Function to load the next question
 const nextQuestion = function() {
@@ -185,7 +192,7 @@ const nextQuestion = function() {
             .classList.add('theAnswer');
         // assign 'The correct answer was ' + .theAnswer
         document.getElementById('correctAnswer')
-            .textContent = 'The correct answer was ' + currentObject['correctAnswer'] + '!'
+            .textContent = 'The Correct Answer Was ' + currentObject['correctAnswer'] + '!'
         
         // set the img src to .answerPic
         document.getElementById('answerPic')
@@ -252,10 +259,14 @@ const answerClick = function (e) {
     if (e.target.classList.contains('theAnswer')) {
         //send text the result header, increment guessed right, call Result screen
         toResult('You Got It!!!', 'guessedRight');
+        // play genius clip
+        playMusic(geniusClip);
     }
     // else
     else {
-        toResult('Sorry, you were incorrect!', 'guessedWrong');
+        toResult('Sorry, You Were Incorrect!', 'guessedWrong');
+        //play wrong clip
+        playMusic(wrongClip);
     }        
 }
 
