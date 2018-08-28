@@ -187,7 +187,7 @@ const nextQuestion = function() {
         // run timer function for 30s, set to go to results after its up, and display to the #timer div
         countdown(30, () => {toResult('Time Is Up!!', 'timesUp')}, true, '#timer');
         // alt increment method, non-functional
-        // countdown(1, () => {toResult('Time Is Up!!', timesUp)}, true, '#timer');
+        // countdown(30, function(){toResult('Time Is Up!!', timesUp)}, true, '#timer');
         // Get the question object from the question array
         let currentObject = questionArray[questionCount];
         // function to fill boxes from the question object
