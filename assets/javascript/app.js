@@ -80,8 +80,7 @@
             correctAnswer: '5-8',
             correctAnswerNum: 'answer3',
             answerPic: 'assets/images/trumptv.jpg',
-        },
-    
+        },    
     ]
 
     // Array of text areas to fill
@@ -99,14 +98,7 @@
     let geniusClip = document.querySelector('#geniusClip');
     let wrongClip = document.querySelector('#wrongClip');
 
-
-
-
-
-
-// Global functions
-
-
+// Global callback functions
 
 // Function for the timer. time = a time in seconds, cb = a function to run on completion, display = true/false, whether to display, target = optional, where to display
 const countdown = function(time, cb, display, target) {
@@ -121,18 +113,44 @@ const countdown = function(time, cb, display, target) {
     }, 1000);
 }
  
+// Function to show one or more elements, allows for multiple elements if all === true
+const showElements = function(all, ...strings) {
+    if (all) {
+        strings.forEach(function(string) {
+            document.querySelectorAll(string).forEach(function(element) {
+                element.classList.remove('invis');
+            })        
+        })        
+    } else {
+        strings.forEach(function(element) {
+            document.querySelector(element).classList.remove('invis');
+        })
+    }
+};
+
+
+// Function to hide one or more elements, allows for multiple elements if all === true
+const hideElements = function(all, ...strings) {
+    if (all) {
+        strings.forEach(function(string) {
+            document.querySelectorAll(string).forEach(function(element) {
+                element.classList.add('invis');
+            })        
+        })        
+    } else {
+        strings.forEach(function(element) {
+            document.querySelector(element).classList.add('invis');
+        })
+    }
+};
 
 
 // Function to go to the result screen, with a parameter for what text to display in the result header and a parameter for which score total to increment
 const toResult = function(text, incrementer) {
     // hide the questionDiv elements
-    document.querySelectorAll('.questionDiv').forEach(function(element) {
-        element.classList.add('invis');
-    });
+    hideElements(true, '.questionDiv');
     // show the resultDiv elements
-    document.querySelectorAll('.resultDiv').forEach(function(element) {
-        element.classList.remove('invis');
-    });
+    showElements(true, '.resultDiv');
     // send the text to the result header
     document.querySelector('#rightWrong').textContent = text;
     // remove .theAnswer class from last round's answer
@@ -160,19 +178,12 @@ const nextQuestion = function() {
     // check to see if we asked all the questions
     if (questionCount === questionArray.length) {
         // go to gameover screen
-        toGameOver();
-        
+        toGameOver();        
     } else {
-        // Hide the startDiv
-        document.querySelector('#startDiv').classList.add('invis');
-        // Hide the resultDiv elements
-        document.querySelectorAll('.resultDiv').forEach(function(element) {
-            element.classList.add('invis');
-        });
+        // Hide the startDiv and resultDiv
+        hideElements(true, '#startDiv', '.resultDiv');
         // Show the questionDiv elements
-        document.querySelectorAll('.questionDiv').forEach(function(element) {
-            element.classList.remove('invis');
-        });
+        showElements(true, '.questionDiv');
         // run timer function for 30s, set to go to results after its up, and display to the #timer div
         countdown(30, () => {toResult('Time Is Up!!', 'timesUp')}, true, '#timer');
         // alt increment method, non-functional
@@ -202,35 +213,25 @@ const nextQuestion = function() {
     }
 }
 
-
 // Function to load the gameover screen
 const toGameOver = function() {
-    // hide the resultDiv
-    document.querySelectorAll('.resultDiv').forEach(function(element) {
-        element.classList.add('invis');
-    });    
-
+    // hide the resultDiv and the timer
+    hideElements(true, '.resultDiv', '#timer');
     // show the gameoverdiv
-    document.querySelectorAll('.gameOverDiv').forEach(function(element) {
-        element.classList.remove('invis');
-    });
-    // hide the timer
-    document.querySelector('#timer').classList.add('invis');    
-    // send guessedRight, guessedWrong, timesUp to ''''''
+    showElements(true, '.gameOverDiv');
+    // Display game over screen content
     document.querySelector("#guessedRight").textContent = 'Correct Answers:   ' + guessedRight;
     document.querySelector("#guessedWrong").textContent = 'Incorrect Answers: ' + guessedWrong;
     document.querySelector("#timesUp").textContent = 'Failed To Answer:  ' + timesUp;
-
 }
 
-
-
+// Functions for gameplay
 
 // When the start button is pressed
 const startGame = function() {
     // show the timer
-    document.querySelector('#timer').classList.remove('invis');
-    // load next question function
+    showElements(false, '#timer');
+    // load next question
     nextQuestion();
 }
     
@@ -244,13 +245,10 @@ const restartGame = function() {
     displayTime = 0;
     clearInterval(intervalID);
     // hide gameover screen
-    document.querySelectorAll('.gameOverDiv').forEach(function(element) {
-        element.classList.add('invis');
-    });    
+    hideElements(true, '.gameOverDiv');
     // start a new game
     startGame();
 }
-
 
 // When the user clicks an answer
 const answerClick = function (e) {
