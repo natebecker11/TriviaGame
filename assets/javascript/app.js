@@ -86,12 +86,12 @@
 
     // Array of text areas to fill
     const textAreas = ['question', 'answer1', 'answer2', 'answer3', 'answer4']
-    // Var to count which question is to be displayed next
+    // Variables to count which question is to be displayed next
     let questionCount = 0;
     // Scorekeeping
     let guessedWrong = 0;
     let guessedRight = 0;
-    let timesUp = 4;
+    let timesUp = 0;
     // interval for timers
     let intervalID = 0;
     let displayTime = 0;
@@ -105,24 +105,20 @@
 // Global functions
 
 
+
 // Function for the timer. time = a time in seconds, cb = a function to run on completion, display = true/false, whether to display, target = optional, where to display
 const countdown = function(time, cb, display, target) {
     if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
     intervalID = setInterval(function(){
-        time--
-        console.log(timesUp);
+        time--        
         if (display) {document.querySelector(target).textContent = ':' + time + 's remaining.'};
         if (!time) {
             clearInterval(intervalID);
             cb();
-        }
+        };
     }, 1000);
 }
-    // set interval to 30 seconds
-    // if timer = 0
-        // increment timesUp
-        // send 'too slow' to 'rightWrong'
-    // run the function that goes to the result screen
+ 
 
 
 // Function to go to the result screen, with a parameter for what text to display in the result header and a parameter for which score total to increment
@@ -137,54 +133,66 @@ const toResult = function(text, incrementer) {
     });
     // send the text to the result header
     document.querySelector('#rightWrong').textContent = text;
-
+    // remove .theAnswer class from last round's answer
+    document.querySelector('.theAnswer').classList.remove('theAnswer');
+    // Increment the appropriate scoreboard
     if (incrementer === 'timesUp') {timesUp++};
     if (incrementer === 'guessedWrong') {guessedWrong++};
     if (incrementer === 'guessedRight') {guessedRight++};
-    // check to see if we asked all the questions
-    if (questionCount === questionArray.length) {
-        // go to gameover screen
-        toGameOver();
-    } else {
-        // start a timer for 5s to send us to the next question
-        countdown(1, nextQuestion, false);
-    }
+    // Alt increment method, non-functional
+    // incrementer++
+
+    // start a timer for 5s to send us to the next question
+    countdown(5, nextQuestion, false);
 };
   
 
 // Function to load the next question
-const nextQuestion = function() {    
-    // Hide the startDiv
-    document.querySelector('#startDiv').classList.add('invis');
-    // Hide the resultDiv elements
-    document.querySelectorAll('.resultDiv').forEach(function(element) {
-        element.classList.add('invis');
-    });
-    // Show the questionDiv elements
-    document.querySelectorAll('.questionDiv').forEach(function(element) {
-        element.classList.remove('invis');
-    });
-    // run timer function for 30s, set to go to results after its up, and display to the #timer div
-    countdown(1, () => {toResult('Time Is Up!!', 'timesUp')}, true, '#timer');
-    // Get the question object from the question array
-    let currentObject = questionArray[questionCount];
-    // function to fill boxes from the question object
-    const boxFiller = function(box) {
-        document.getElementById(box).textContent = currentObject[box];        
-    };
-    // Fill the question and answers boxes
-    textAreas.forEach(function(element) {
-        boxFiller(element);
-    });   
-    // Assign theAnswer class to .theAnswer
-    document.getElementById(currentObject['correctAnswerNum']).classList.add('theAnswer');
-    // assign 'The correct answer was ' + .theAnswer
-    document.getElementById('correctAnswer').textContent = 'The correct answer was ' + currentObject['correctAnswer'] + '!'
-    
-    // set the img src to .answerPic
-    document.getElementById('answerPic').src = currentObject['answerPic'];
-    // increment questionCount
-    questionCount++;
+const nextQuestion = function() {
+    clearInterval(intervalID);
+    // check to see if we asked all the questions
+    if (questionCount === questionArray.length) {
+        // go to gameover screen
+        toGameOver();
+        
+    } else {
+        // Hide the startDiv
+        document.querySelector('#startDiv').classList.add('invis');
+        // Hide the resultDiv elements
+        document.querySelectorAll('.resultDiv').forEach(function(element) {
+            element.classList.add('invis');
+        });
+        // Show the questionDiv elements
+        document.querySelectorAll('.questionDiv').forEach(function(element) {
+            element.classList.remove('invis');
+        });
+        // run timer function for 30s, set to go to results after its up, and display to the #timer div
+        countdown(30, () => {toResult('Time Is Up!!', 'timesUp')}, true, '#timer');
+        // alt increment method, non-functional
+        // countdown(1, () => {toResult('Time Is Up!!', timesUp)}, true, '#timer');
+        // Get the question object from the question array
+        let currentObject = questionArray[questionCount];
+        // function to fill boxes from the question object
+        const boxFiller = function(box) {
+            document.getElementById(box).textContent = currentObject[box];
+        };
+        // Fill the question and answers boxes
+        textAreas.forEach(function(element) {
+            boxFiller(element);
+        });
+        // Assign theAnswer class to .theAnswer
+        document.getElementById(currentObject['correctAnswerNum'])
+            .classList.add('theAnswer');
+        // assign 'The correct answer was ' + .theAnswer
+        document.getElementById('correctAnswer')
+            .textContent = 'The correct answer was ' + currentObject['correctAnswer'] + '!'
+        
+        // set the img src to .answerPic
+        document.getElementById('answerPic')
+            .src = currentObject['answerPic'];
+        // Increment question counter in order to move onto the next question
+        questionCount++;
+    }
 }
 
 
@@ -203,16 +211,12 @@ const toGameOver = function() {
     document.querySelector('#timer').classList.add('invis');    
     // send guessedRight, guessedWrong, timesUp to ''''''
     document.querySelector("#guessedRight").textContent = 'Correct Answers:   ' + guessedRight;
-    document.querySelector("#guessedRight").textContent = 'Incorrect Answers: ' + guessedWrong;
-    document.querySelector("#guessedRight").textContent = 'Failed To Answer:  ' + timesUp;
+    document.querySelector("#guessedWrong").textContent = 'Incorrect Answers: ' + guessedWrong;
+    document.querySelector("#timesUp").textContent = 'Failed To Answer:  ' + timesUp;
 
 }
 
 
-// Function to start a mid-round timer
-    // start a timer for 5 seconds, if questionCount = array.length - 1, send to end screen, else run next question function
-    //// Remove the .theAnswer class from the previous right answer
-    // document.querySelector('.theAnswer').classList.remove('theAnswer');
 
 
 // When the start button is pressed
@@ -224,23 +228,34 @@ const startGame = function() {
 }
     
 // When the restart button is pressed
+const restartGame = function() {
     // clear global variables
+    questionCount = 0;    
+    guessedWrong = 0;
+    guessedRight = 0;
+    timesUp = 0;    
+    displayTime = 0;
+    clearInterval(intervalID);
     // hide gameover screen
-    // load next question function
+    document.querySelectorAll('.gameOverDiv').forEach(function(element) {
+        element.classList.add('invis');
+    });    
+    // start a new game
+    startGame();
+}
 
 
 // When the user clicks an answer
-    // run the function that goes to the result screen
-    
-    // if the clicked item has .theAnswer        
-        // remove .theAnswer
-        // change text content of rightWrong to 'you got it'        
-        // increment right answer
+const answerClick = function (e) {
+    clearInterval(intervalID);
+    // if the clicked item has .theAnswer
+    if (e.target.classList.contains('theAnswer')) {
+        //send text the result header, increment guessed right, call Result screen
+        toResult('You Got It!!!', 'guessedRight');
+    }
     // else
-        // remove .theAnswer from .theAnswer
-        // change text content of rightWrong to 'you got it wrong!'
-        // increment wrong answer
+    else {
+        toResult('Sorry, you were incorrect!', 'guessedWrong');
+    }        
+}
 
-
-
-    

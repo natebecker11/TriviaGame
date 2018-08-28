@@ -20,10 +20,10 @@
         </div>
         
         <h3 class='question questionDiv invis' id='question'>What tastes like cat food?</h3>
-        <h2 class='ans answer1 questionDiv invis' id='answer1'>Man food</h2>
-        <h2 class='ans answer2 questionDiv invis' id='answer2'>Dog food</h2>
-        <h2 class='ans answer3 questionDiv invis' id='answer3'>Cats</h2>
-        <h2 class='ans answer4 questionDiv invis' id='answer4'>Cat food</h2>
+        <h2 class='ans answer1 questionDiv invis' onclick='answerClick(event)' id='answer1'>Man food</h2>
+        <h2 class='ans answer2 questionDiv invis' onclick='answerClick(event)' id='answer2'>Dog food</h2>
+        <h2 class='ans answer3 questionDiv invis' onclick='answerClick(event)' id='answer3'>Cats</h2>
+        <h2 class='ans answer4 questionDiv invis' onclick='answerClick(event)' id='answer4'>Cat food</h2>
         
         
         <h2 class='right-wrong resultDiv invis' id='rightWrong'></h2>
@@ -35,7 +35,7 @@
         <h3 class='correct-ans gameOverDiv invis' id='guessedRight'></h3>
         <h3 class='incorrect-ans gameOverDiv invis' id='guessedWrong'></h3>
         <h3 class='unanswered gameOverDiv invis' id='timesUp'></h3>
-        <h2 class='restart-box gameOverDiv invis' id='restartBox'>Click Here To Play Again!</h2>
+        <h2 class='restart-box gameOverDiv invis' id='restartBox' onclick='restartGame()'>Click Here To Play Again!</h2>
         
     </div>
     
