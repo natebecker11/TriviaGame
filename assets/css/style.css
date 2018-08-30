@@ -17,7 +17,7 @@ html {
     display: grid;
     justify-items: center;
     grid-template-columns: 10px 10px 10px auto 10px 10px 10px;
-    grid-template-rows: 20px 75px 75px 30px 30px repeat(4, 45px) 60px;
+    grid-template-rows: 20px 75px 75px 30px 50px repeat(4, 45px) 60px;
     background-color: #0A0D6F;
     border: 2px ridge #787501;
     border-radius: 25px;
@@ -165,7 +165,7 @@ html {
 @media screen and (max-width: 980px) {
     .container {
         width: 90%;
-        grid-template-columns: repeat(3, 10px) auto repeat(3, 10px);
+        grid-template-columns: repeat(3, 5px) auto repeat(3, 5px);
 
     }
 
@@ -186,11 +186,33 @@ html {
     h3 {
         font-size: 80%;
     }
+
+    img {
+        max-width: 70%;
+    }
 }
 
 @media screen and (max-width: 640px) {
+    .container {
+        height: 500px;
+        grid-template-rows: 8px 40px 40px 30px 50px repeat(4, 45px) 60px;
+
+    }
+
+    .header {
+        font-size: 26px;
+    }
 
     h3 {
-        font-size: 75%;
+        font-size: 14px;
     }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .right-wrong, .start-btn2 {
+        font-size: 24px;
+    }
+
 }
